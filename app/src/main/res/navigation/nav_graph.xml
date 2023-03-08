@@ -22,4 +22,9 @@
             android:id="@+id/action_createAlarmFragment_to_alarmsListFragment"
             app:destination="@id/alarmsListFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/worldTimeFragment"
+        android:name="com.learntodroid.simplealarmclock.worldtime.WorldTimeFragment"
+        android:label="fragment_world_time"
+        tools:layout="@layout/fragment_world_time" />
 </navigation>
