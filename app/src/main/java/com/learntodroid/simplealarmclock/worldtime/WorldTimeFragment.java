@@ -2,13 +2,26 @@ package com.learntodroid.simplealarmclock.worldtime;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.learntodroid.simplealarmclock.R;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
+
+import butterknife.BindView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +38,18 @@ public class WorldTimeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    Calendar current;
+
+    Spinner spinner;
+    TextView timezone;
+    TextView txtCurrentTime;
+    TextView txtTimeZoneTime;
+
+    long miliSeconds;
+    ArrayAdapter<String> idAdapter;
+    SimpleDateFormat simpleDateFormat;
+    Date resultDate;
 
     public WorldTimeFragment() {
         // Required empty public constructor
@@ -55,6 +80,73 @@ public class WorldTimeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        spinner = (Spinner) view.findViewById(R.id.spinner);
+        timezone = (TextView) view.findViewById(R.id.timezone);
+        txtCurrentTime = (TextView) view.findViewById(R.id.txtCurrentTime);
+        txtTimeZoneTime = (TextView) view.findViewById(R.id.txtTimeZoneTime);
+
+        String[] idArray = TimeZone.getAvailableIDs();
+        simpleDateFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm:ss");
+        idAdapter = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item, idArray);
+        spinner.setAdapter(idAdapter);
+
+        getGMTtime();
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
+                getGMTtime();
+                String selectId = (String) (parent.getItemAtPosition(position));
+
+                TimeZone timeZone =  TimeZone.getTimeZone(selectId);
+                String timeZoneName = timeZone.getDisplayName();
+
+                int timeZoneOffSet = timeZone.getRawOffset() / (60 * 100);
+
+                int hrs = timeZoneOffSet / 60;
+                int mins = timeZoneOffSet % 60;
+
+                miliSeconds = miliSeconds + timeZone.getRawOffset();
+                resultDate = new Date(miliSeconds);
+
+                System.out.println(simpleDateFormat.format(resultDate));
+
+                timezone.setText(timeZoneName + ": GMT " + hrs + ":" + mins);
+                txtTimeZoneTime.setText("" + simpleDateFormat.format(resultDate));
+                miliSeconds = 0;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    private void getGMTtime() {
+        current = Calendar.getInstance();
+
+        txtCurrentTime.setText("" + current.getTime());
+
+        miliSeconds = current.getTimeInMillis();
+
+        TimeZone txCurrent = current.getTimeZone();
+        int offSet = txCurrent.getRawOffset();
+
+        if (txCurrent.inDaylightTime(new Date())) {
+            offSet += txCurrent.getDSTSavings();
+        }
+
+        miliSeconds -= offSet;
+
+        resultDate = new Date(miliSeconds);
+        System.out.println(simpleDateFormat.format(resultDate));
     }
 
     @Override

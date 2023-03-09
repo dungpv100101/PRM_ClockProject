@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.learntodroid.simplealarmclock.R;
 import com.learntodroid.simplealarmclock.data.Alarm;
 
@@ -28,7 +29,8 @@ import butterknife.ButterKnife;
 public class CreateAlarmFragment extends Fragment {
     @BindView(R.id.fragment_createalarm_timePicker) TimePicker timePicker;
     @BindView(R.id.fragment_createalarm_title) EditText title;
-    @BindView(R.id.fragment_createalarm_scheduleAlarm) Button scheduleAlarm;
+    @BindView(R.id.fragment_createalarm_scheduleAlarm)
+    FloatingActionButton scheduleAlarm;
     @BindView(R.id.fragment_createalarm_recurring) CheckBox recurring;
     @BindView(R.id.fragment_createalarm_checkMon) CheckBox mon;
     @BindView(R.id.fragment_createalarm_checkTue) CheckBox tue;

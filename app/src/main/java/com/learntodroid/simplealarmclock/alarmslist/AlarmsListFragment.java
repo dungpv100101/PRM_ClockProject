@@ -15,6 +15,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.learntodroid.simplealarmclock.data.Alarm;
 import com.learntodroid.simplealarmclock.R;
 
@@ -24,7 +25,7 @@ public class AlarmsListFragment extends Fragment implements OnToggleAlarmListene
     private AlarmRecyclerViewAdapter alarmRecyclerViewAdapter;
     private AlarmsListViewModel alarmsListViewModel;
     private RecyclerView alarmsRecyclerView;
-    private Button addAlarm;
+    private FloatingActionButton addAlarm;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
