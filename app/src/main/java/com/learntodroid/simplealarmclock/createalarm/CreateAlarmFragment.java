@@ -1,5 +1,6 @@
 package com.learntodroid.simplealarmclock.createalarm;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +44,8 @@ public class CreateAlarmFragment extends Fragment {
 
     private CreateAlarmViewModel createAlarmViewModel;
 
+    public static Alarm alarm;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +59,11 @@ public class CreateAlarmFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_createalarm, container, false);
 
         ButterKnife.bind(this, view);
+
+        if(alarm!=null){
+            viewAlarm();
+            alarm = null;
+        }
 
         recurring.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -103,4 +111,39 @@ public class CreateAlarmFragment extends Fragment {
 
         alarm.schedule(getContext());
     }
+
+    private void viewAlarm(){
+        title.setText((alarm.getTitle()!=null && !alarm.getTitle().isEmpty()) ? alarm.getTitle() : "OK");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            timePicker.setHour(alarm.getHour());
+            timePicker.setMinute(alarm.getMinute());
+        }
+
+        if(alarm.isStarted()){
+            recurringOptions.setVisibility(View.VISIBLE);
+            recurring.setChecked(alarm.isStarted());
+            mon.setChecked(alarm.isMonday());
+            fri.setChecked(alarm.isFriday());
+            tue.setChecked(alarm.isTuesday());
+            wed.setChecked(alarm.isWednesday());
+            thu.setChecked(alarm.isThursday());
+            fri.setChecked(alarm.isFriday());
+            sat.setChecked(alarm.isSaturday());
+            sun.setChecked(alarm.isSunday());
+        }
+
+        scheduleAlarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateAlarm(alarm);
+                Navigation.findNavController(v).navigate(R.id.action_createAlarmFragment_to_alarmsListFragment);
+            }
+        });
+
+    }
+
+    private void updateAlarm(Alarm alarm){
+
+    }
+
 }
