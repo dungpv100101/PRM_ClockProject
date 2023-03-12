@@ -1,8 +1,10 @@
 package com.learntodroid.simplealarmclock.alarmslist;
 
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -10,8 +12,12 @@ import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.navigation.NavigationView;
+import com.learntodroid.simplealarmclock.createalarm.CreateAlarmFragment;
 import com.learntodroid.simplealarmclock.data.Alarm;
 import com.learntodroid.simplealarmclock.R;
+
+import butterknife.BindView;
 
 public class AlarmViewHolder extends RecyclerView.ViewHolder {
     private TextView alarmTime;
@@ -65,6 +71,7 @@ public class AlarmViewHolder extends RecyclerView.ViewHolder {
         alarmTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                CreateAlarmFragment.alarm = alarm;
                 Navigation.findNavController(view).navigate(R.id.action_alarmsListFragment_to_createAlarmFragment);
             }
         });
