@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.learntodroid.simplealarmclock.data.Alarm;
@@ -58,6 +59,13 @@ public class AlarmViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 listener.onToggle(alarm);
+            }
+        });
+
+        alarmTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_alarmsListFragment_to_createAlarmFragment);
             }
         });
     }
