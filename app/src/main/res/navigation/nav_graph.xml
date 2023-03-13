@@ -27,4 +27,9 @@
         android:name="com.learntodroid.simplealarmclock.worldtime.WorldTimeFragment"
         android:label="fragment_world_time"
         tools:layout="@layout/fragment_world_time" />
+    <fragment
+        android:id="@+id/stopWatchFragment2"
+        android:name="com.learntodroid.simplealarmclock.stopwatch.StopWatchFragment"
+        android:label="fragment_stop_watch"
+        tools:layout="@layout/fragment_stop_watch" />
 </navigation>
