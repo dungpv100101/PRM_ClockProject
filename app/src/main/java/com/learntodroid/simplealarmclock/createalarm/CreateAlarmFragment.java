@@ -1,5 +1,6 @@
 package com.learntodroid.simplealarmclock.createalarm;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import androidx.navigation.Navigation;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.learntodroid.simplealarmclock.R;
+import com.learntodroid.simplealarmclock.alarmslist.AlarmsListViewModel;
 import com.learntodroid.simplealarmclock.data.Alarm;
 
 import java.util.Random;
@@ -41,8 +43,10 @@ public class CreateAlarmFragment extends Fragment {
     @BindView(R.id.fragment_createalarm_checkSat) CheckBox sat;
     @BindView(R.id.fragment_createalarm_checkSun) CheckBox sun;
     @BindView(R.id.fragment_createalarm_recurring_options) LinearLayout recurringOptions;
+    @BindView(R.id.delete_Alarm) FloatingActionButton deleteAlarm;
 
     private CreateAlarmViewModel createAlarmViewModel;
+    private AlarmsListViewModel alarmsListViewModel;
 
     public static Alarm alarm;
 
@@ -51,8 +55,10 @@ public class CreateAlarmFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         createAlarmViewModel = ViewModelProviders.of(this).get(CreateAlarmViewModel.class);
+        alarmsListViewModel  = ViewModelProviders.of(this).get(AlarmsListViewModel.class);
     }
 
+    @SuppressLint("RestrictedApi")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -60,9 +66,18 @@ public class CreateAlarmFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
+        deleteAlarm.setVisibility( alarm!=null ? View.VISIBLE : View.INVISIBLE);
+
         if(alarm!=null){
             viewAlarm();
-            alarm = null;
+        }else {
+            scheduleAlarm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    scheduleAlarm();
+                    Navigation.findNavController(v).navigate(R.id.action_createAlarmFragment_to_alarmsListFragment);
+                }
+            });
         }
 
         recurring.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -76,36 +91,15 @@ public class CreateAlarmFragment extends Fragment {
             }
         });
 
-        scheduleAlarm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scheduleAlarm();
-                Navigation.findNavController(v).navigate(R.id.action_createAlarmFragment_to_alarmsListFragment);
-            }
-        });
-
         return view;
     }
 
     private void scheduleAlarm() {
         int alarmId = new Random().nextInt(Integer.MAX_VALUE);
 
-        Alarm alarm = new Alarm(
-                alarmId,
-                TimePickerUtil.getTimePickerHour(timePicker),
-                TimePickerUtil.getTimePickerMinute(timePicker),
-                title.getText().toString(),
-                System.currentTimeMillis(),
-                true,
-                recurring.isChecked(),
-                mon.isChecked(),
-                tue.isChecked(),
-                wed.isChecked(),
-                thu.isChecked(),
-                fri.isChecked(),
-                sat.isChecked(),
-                sun.isChecked()
-        );
+        Alarm alarm = getAlarmFromFragment();
+
+        alarm.setAlarmId(alarmId);
 
         createAlarmViewModel.insert(alarm);
 
@@ -135,15 +129,49 @@ public class CreateAlarmFragment extends Fragment {
         scheduleAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateAlarm(alarm);
+                Alarm alarmNew = getAlarmFromFragment();
+                alarmNew.setAlarmId(alarm.getAlarmId());
+                updateAlarm(alarmNew);
                 Navigation.findNavController(v).navigate(R.id.action_createAlarmFragment_to_alarmsListFragment);
+            }
+        });
+
+        deleteAlarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteAlarm(alarm);
+                Navigation.findNavController(view).navigate(R.id.action_createAlarmFragment_to_alarmsListFragment);
             }
         });
 
     }
 
     private void updateAlarm(Alarm alarm){
+        alarmsListViewModel.update(alarm);
+    }
 
+    private void deleteAlarm(Alarm alarm){
+        createAlarmViewModel.delete(alarm);
+    }
+
+    private Alarm getAlarmFromFragment(){
+        return
+                new Alarm(
+                0,
+                TimePickerUtil.getTimePickerHour(timePicker),
+                TimePickerUtil.getTimePickerMinute(timePicker),
+                title.getText().toString(),
+                System.currentTimeMillis(),
+                true,
+                recurring.isChecked(),
+                mon.isChecked(),
+                tue.isChecked(),
+                wed.isChecked(),
+                thu.isChecked(),
+                fri.isChecked(),
+                sat.isChecked(),
+                sun.isChecked()
+        );
     }
 
 }

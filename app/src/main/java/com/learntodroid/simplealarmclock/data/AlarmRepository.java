@@ -20,6 +20,12 @@ public class AlarmRepository {
         });
     }
 
+    public void delete(Alarm alarm){
+        AlarmDatabase.databaseWriteExecutor.execute(()->{
+            alarmDao.delete(alarm);
+        });
+    }
+
     public void update(Alarm alarm) {
         AlarmDatabase.databaseWriteExecutor.execute(() -> {
             alarmDao.update(alarm);
