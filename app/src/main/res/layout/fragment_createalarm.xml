@@ -152,6 +152,20 @@
             app:srcCompat="@drawable/ic_save"
             tools:ignore="MissingConstraints" />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/delete_Alarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="336dp"
+            android:layout_marginRight="336dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_save"
+            tools:ignore="MissingConstraints" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>
