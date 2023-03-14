@@ -107,11 +107,14 @@ public class CreateAlarmFragment extends Fragment {
             }
         });
 
-        scheduleAlarm.setOnClickListener(new View.OnClickListener() {
+        recurring.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                scheduleAlarm();
-                Navigation.findNavController(v).navigate(R.id.action_createAlarmFragment_to_alarmsListFragment);
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    recurringOptions.setVisibility(View.VISIBLE);
+                } else {
+                    recurringOptions.setVisibility(View.GONE);
+                }
             }
         });
 
@@ -120,7 +123,6 @@ public class CreateAlarmFragment extends Fragment {
 
     private void scheduleAlarm() {
         int alarmId = new Random().nextInt(Integer.MAX_VALUE);
-
 
         Alarm alarm = getAlarmFromFragment();
 
