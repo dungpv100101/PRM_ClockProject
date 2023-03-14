@@ -49,8 +49,8 @@
             android:layout_height="wrap_content"
             android:checked="false"
             android:text="Recurring Alarm"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fragment_createalarm_title" />
+
 
         <LinearLayout
             android:id="@+id/fragment_createalarm_recurring_options"
@@ -104,7 +104,41 @@
 
         </LinearLayout>
 
+        <CheckBox
+            android:id="@+id/fragment_createalarm_isSendMail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="Send Mail"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_createalarm_recurring_options"
+            tools:layout_editor_absoluteX="-45dp" />
 
+        <LinearLayout
+            android:id="@+id/fragment_createalarm_mail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_createalarm_isSendMail">
+
+            <EditText
+                android:id="@+id/fragment_createalarm_mailTo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="To"/>
+
+            <EditText
+                android:id="@+id/fragment_createalarm_mailTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Subject"/>
+
+            <EditText
+                android:id="@+id/fragment_createalarm_mailContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Content"/>
+        </LinearLayout>
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fragment_createalarm_scheduleAlarm"
             android:layout_width="wrap_content"
