@@ -96,6 +96,28 @@ public class CreateAlarmFragment extends Fragment {
             }
         });
 
+        isSendMail.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    mailOptions.setVisibility(View.VISIBLE);
+                } else {
+                    mailOptions.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        recurring.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    recurringOptions.setVisibility(View.VISIBLE);
+                } else {
+                    recurringOptions.setVisibility(View.GONE);
+                }
+            }
+        });
+
         return view;
     }
 
@@ -130,17 +152,15 @@ public class CreateAlarmFragment extends Fragment {
             sat.setChecked(alarm.isSaturday());
             sun.setChecked(alarm.isSunday());
         }
-
-        isSendMail.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if (isChecked) {
-                    mailOptions.setVisibility(View.VISIBLE);
-                } else {
-                    mailOptions.setVisibility(View.GONE);
-                }
-            }
-        });
+        if(alarm.getMailTo()!=null && !alarm.getMailTo().isEmpty()){
+            mailOptions.setVisibility(View.VISIBLE);
+            isSendMail.setChecked(alarm.getMailTo()!=null && !alarm.getMailTo().isEmpty());
+            mailTo.setText((alarm.getMailTo()!=null && !alarm.getMailTo().isEmpty())?alarm.getMailTo():"");
+            mailTitle.setText((alarm.getTitle()!=null && !alarm.getTitle().isEmpty())?alarm.getTitle():"");
+            mailContent.setText((alarm.getMailContent()!=null && !alarm.getMailContent().isEmpty())?alarm.getMailContent():"");
+        }else {
+            mailOptions.setVisibility(View.GONE);
+        }
 
         scheduleAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
