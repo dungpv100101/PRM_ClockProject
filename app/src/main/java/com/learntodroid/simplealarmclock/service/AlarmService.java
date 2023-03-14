@@ -15,8 +15,12 @@ import androidx.core.app.NotificationCompat;
 
 import com.learntodroid.simplealarmclock.R;
 import com.learntodroid.simplealarmclock.activities.RingActivity;
+import com.learntodroid.simplealarmclock.mail.JavaMailAPI;
 
 import static com.learntodroid.simplealarmclock.application.App.CHANNEL_ID;
+import static com.learntodroid.simplealarmclock.broadcastreceiver.AlarmBroadcastReceiver.MAILCONTENT;
+import static com.learntodroid.simplealarmclock.broadcastreceiver.AlarmBroadcastReceiver.MAILTITLE;
+import static com.learntodroid.simplealarmclock.broadcastreceiver.AlarmBroadcastReceiver.MAILTO;
 import static com.learntodroid.simplealarmclock.broadcastreceiver.AlarmBroadcastReceiver.TITLE;
 
 public class AlarmService extends Service {
@@ -40,6 +44,13 @@ public class AlarmService extends Service {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
         String alarmTitle = String.format("%s Alarm", intent.getStringExtra(TITLE));
+
+        String mailTo = String.format("%s", intent.getStringExtra(MAILTO));
+        String mailTitle = String.format("%s", intent.getStringExtra(MAILTITLE));
+        String mailContent = String.format("%s", intent.getStringExtra(MAILCONTENT));
+
+        JavaMailAPI javaMailAPI = new JavaMailAPI(getApplicationContext(), mailTo, mailTitle, mailContent);
+        javaMailAPI.execute();
 
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle(alarmTitle)

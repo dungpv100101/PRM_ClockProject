@@ -35,6 +35,7 @@ public class CreateAlarmFragment extends Fragment {
     @BindView(R.id.fragment_createalarm_scheduleAlarm)
     FloatingActionButton scheduleAlarm;
     @BindView(R.id.fragment_createalarm_recurring) CheckBox recurring;
+    @BindView(R.id.fragment_createalarm_isSendMail) CheckBox isSendMail;
     @BindView(R.id.fragment_createalarm_checkMon) CheckBox mon;
     @BindView(R.id.fragment_createalarm_checkTue) CheckBox tue;
     @BindView(R.id.fragment_createalarm_checkWed) CheckBox wed;
@@ -42,7 +43,11 @@ public class CreateAlarmFragment extends Fragment {
     @BindView(R.id.fragment_createalarm_checkFri) CheckBox fri;
     @BindView(R.id.fragment_createalarm_checkSat) CheckBox sat;
     @BindView(R.id.fragment_createalarm_checkSun) CheckBox sun;
+    @BindView(R.id.fragment_createalarm_mailTo) EditText mailTo;
+    @BindView(R.id.fragment_createalarm_mailTitle) EditText mailTitle;
+    @BindView(R.id.fragment_createalarm_mailContent) EditText mailContent;
     @BindView(R.id.fragment_createalarm_recurring_options) LinearLayout recurringOptions;
+    @BindView(R.id.fragment_createalarm_mail) LinearLayout mailOptions;
     @BindView(R.id.delete_Alarm) FloatingActionButton deleteAlarm;
 
     private CreateAlarmViewModel createAlarmViewModel;
@@ -126,6 +131,17 @@ public class CreateAlarmFragment extends Fragment {
             sun.setChecked(alarm.isSunday());
         }
 
+        isSendMail.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    mailOptions.setVisibility(View.VISIBLE);
+                } else {
+                    mailOptions.setVisibility(View.GONE);
+                }
+            }
+        });
+
         scheduleAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -170,7 +186,10 @@ public class CreateAlarmFragment extends Fragment {
                 thu.isChecked(),
                 fri.isChecked(),
                 sat.isChecked(),
-                sun.isChecked()
+                sun.isChecked(),
+                mailTo.getText().toString(),
+                mailTitle.getText().toString(),
+                mailContent.getText().toString()
         );
     }
 

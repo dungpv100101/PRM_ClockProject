@@ -16,7 +16,11 @@ import com.learntodroid.simplealarmclock.createalarm.DayUtil;
 
 import java.util.Calendar;
 
+import static com.learntodroid.simplealarmclock.broadcastreceiver.AlarmBroadcastReceiver.ALARM;
 import static com.learntodroid.simplealarmclock.broadcastreceiver.AlarmBroadcastReceiver.FRIDAY;
+import static com.learntodroid.simplealarmclock.broadcastreceiver.AlarmBroadcastReceiver.MAILCONTENT;
+import static com.learntodroid.simplealarmclock.broadcastreceiver.AlarmBroadcastReceiver.MAILTITLE;
+import static com.learntodroid.simplealarmclock.broadcastreceiver.AlarmBroadcastReceiver.MAILTO;
 import static com.learntodroid.simplealarmclock.broadcastreceiver.AlarmBroadcastReceiver.MONDAY;
 import static com.learntodroid.simplealarmclock.broadcastreceiver.AlarmBroadcastReceiver.RECURRING;
 import static com.learntodroid.simplealarmclock.broadcastreceiver.AlarmBroadcastReceiver.SATURDAY;
@@ -38,8 +42,39 @@ public class Alarm {
     private String title;
 
     private long created;
+    private String mailTo;
+    private String mailTitle;
+    private String mailContent;
 
-    public Alarm(int alarmId, int hour, int minute, String title, long created, boolean started, boolean recurring, boolean monday, boolean tuesday, boolean wednesday, boolean thursday, boolean friday, boolean saturday, boolean sunday) {
+    public String getMailTitle() {
+        return mailTitle;
+    }
+
+    public String getMailContent() {
+        return mailContent;
+    }
+
+    public void setMailTitle(String mailTitle) {
+        this.mailTitle = mailTitle;
+    }
+
+    public void setMailContent(String mailContent) {
+        this.mailContent = mailContent;
+    }
+
+    public void setHour(int hour) {
+        this.hour = hour;
+    }
+
+    public String getMailTo() {
+        return mailTo;
+    }
+
+    public void setMailTo(String mailTo) {
+        this.mailTo = mailTo;
+    }
+
+    public Alarm(int alarmId, int hour, int minute, String title, long created, boolean started, boolean recurring, boolean monday, boolean tuesday, boolean wednesday, boolean thursday, boolean friday, boolean saturday, boolean sunday, String mailTo, String mailTitle, String mailContent) {
         this.alarmId = alarmId;
         this.hour = hour;
         this.minute = minute;
@@ -58,6 +93,9 @@ public class Alarm {
         this.title = title;
 
         this.created = created;
+        this.mailTo = mailTo;
+        this.mailTitle = mailTitle;
+        this.mailContent = mailContent;
     }
 
     public int getHour() {
@@ -126,6 +164,10 @@ public class Alarm {
         intent.putExtra(SUNDAY, sunday);
 
         intent.putExtra(TITLE, title);
+
+        intent.putExtra(MAILTO, mailTo);
+        intent.putExtra(MAILTITLE, mailTitle);
+        intent.putExtra(MAILCONTENT, mailContent);
 
         PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(context, alarmId, intent, 0);
 
