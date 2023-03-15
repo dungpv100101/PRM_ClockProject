@@ -2,7 +2,6 @@ package com.learntodroid.simplealarmclock.mail;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.se.omapi.Session;
 
 import java.util.Properties;
 

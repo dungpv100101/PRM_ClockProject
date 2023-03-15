@@ -151,10 +151,15 @@ public class CreateAlarmFragment extends Fragment {
             fri.setChecked(alarm.isFriday());
             sat.setChecked(alarm.isSaturday());
             sun.setChecked(alarm.isSunday());
+        }
+        if(alarm.getMailTo()!=null && !alarm.getMailTo().isEmpty()){
+            mailOptions.setVisibility(View.VISIBLE);
             isSendMail.setChecked(alarm.getMailTo()!=null && !alarm.getMailTo().isEmpty());
             mailTo.setText((alarm.getMailTo()!=null && !alarm.getMailTo().isEmpty())?alarm.getMailTo():"");
             mailTitle.setText((alarm.getTitle()!=null && !alarm.getTitle().isEmpty())?alarm.getTitle():"");
             mailContent.setText((alarm.getMailContent()!=null && !alarm.getMailContent().isEmpty())?alarm.getMailContent():"");
+        }else {
+            mailOptions.setVisibility(View.GONE);
         }
 
         scheduleAlarm.setOnClickListener(new View.OnClickListener() {
