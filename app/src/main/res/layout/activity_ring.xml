@@ -21,29 +21,40 @@
         android:id="@+id/activity_ring_clock"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        app:layout_constraintBottom_toTopOf="@+id/activity_ring_dismiss"
+        app:layout_constraintBottom_toTopOf="@+id/buttonPanel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:srcCompat="@drawable/ic_alarm_black_24dp"
-        />
+        app:srcCompat="@drawable/ic_alarm_black_24dp" />
 
-    <Button
-        android:id="@+id/activity_ring_dismiss"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/buttonPanel"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Dismiss"
-        app:layout_constraintBottom_toTopOf="@+id/activity_ring_snooze"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/activity_ring_snooze"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Snooze"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/activity_ring_dismiss"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Dismiss"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toTopOf="@+id/activity_ring_snooze"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/activity_ring_snooze"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:text="Snooze"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

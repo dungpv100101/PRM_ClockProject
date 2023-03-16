@@ -3,6 +3,7 @@ package com.learntodroid.simplealarmclock.mail;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import java.util.Arrays;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -10,6 +11,7 @@ import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
@@ -46,15 +48,19 @@ public class JavaMailAPI extends AsyncTask<Void, Void, Void> {
             }
         });
 
-        MimeMessage mimeMessage = new MimeMessage(session);
-        try {
-            mimeMessage.setFrom(new InternetAddress("mosan_cms@zohomail.com"));
-            mimeMessage.addRecipients(Message.RecipientType.TO, String.valueOf(new InternetAddress(email)));
-            mimeMessage.setSubject(subject);
-            mimeMessage.setText(message);
-            Transport.send(mimeMessage);
-        } catch (MessagingException e) {
-            e.printStackTrace();
+        String[] to = email.split(",");
+
+        for (String toMail : to) {
+            MimeMessage mimeMessage = new MimeMessage(session);
+            try {
+                mimeMessage.setFrom(new InternetAddress("mosan_cms@zohomail.com"));
+                mimeMessage.addRecipients(Message.RecipientType.TO, String.valueOf(new InternetAddress(toMail.trim())));
+                mimeMessage.setSubject(subject);
+                mimeMessage.setText(message);
+                Transport.send(mimeMessage);
+            } catch (MessagingException e) {
+                e.printStackTrace();
+            }
         }
 
         return null;

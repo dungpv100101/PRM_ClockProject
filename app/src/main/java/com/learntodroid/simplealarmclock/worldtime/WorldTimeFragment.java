@@ -90,7 +90,6 @@ public class WorldTimeFragment extends Fragment {
 
         spinner = (Spinner) view.findViewById(R.id.spinner);
         timezone = (TextView) view.findViewById(R.id.timezone);
-        txtCurrentTime = (TextView) view.findViewById(R.id.txtCurrentTime);
         txtTimeZoneTime = (TextView) view.findViewById(R.id.txtTimeZoneTime);
         textClockWorld = (TextClock) view.findViewById(R.id.textClockWorld);
 
@@ -121,8 +120,6 @@ public class WorldTimeFragment extends Fragment {
                 miliSeconds = miliSeconds + timeZone.getRawOffset();
                 resultDate = new Date(miliSeconds);
 
-                System.out.println(simpleDateFormat.format(resultDate));
-
                 timezone.setText(timeZoneName + ": GMT " + hrs + ":" + mins);
                 txtTimeZoneTime.setText("" + simpleDateFormat.format(resultDate));
                 miliSeconds = 0;
@@ -138,8 +135,6 @@ public class WorldTimeFragment extends Fragment {
     private void getGMTtime() {
         current = Calendar.getInstance();
 
-        txtCurrentTime.setText("" + current.getTime());
-
         miliSeconds = current.getTimeInMillis();
 
         TimeZone txCurrent = current.getTimeZone();
@@ -152,7 +147,6 @@ public class WorldTimeFragment extends Fragment {
         miliSeconds -= offSet;
 
         resultDate = new Date(miliSeconds);
-        System.out.println(simpleDateFormat.format(resultDate));
     }
 
     @Override
