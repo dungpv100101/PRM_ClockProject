@@ -1,41 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="300dp"
-    android:layout_height="300dp"
-    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_gravity="center"
+    android:background="@color/background"
     android:gravity="center"
-    android:background="@drawable/bg_round"
-    tools:context=".worldtime.StopWatch"
-    >
-    <Chronometer
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/chronometer"
-        android:format="00:00:00"
-        android:textSize="40sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/white"/>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/bt_start"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_play"/>
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/bt_stop"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_stop"/>
+    android:orientation="vertical"
+    tools:context=".stopwatch.StopWatchFragment">
 
+    <LinearLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/border_bottom"
+        android:gravity="center"
+        android:padding="5dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Stop watch"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <Chronometer
+            android:id="@+id/chronometer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:format="00:00:00"
+            android:textColor="@android:color/black"
+            android:textSize="80sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="169dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/bt_start"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/bg_round"
+                android:src="@drawable/ic_play" />
+
+            <ImageButton
+                android:id="@+id/bt_stop"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="80dp"
+                android:background="@drawable/bg_round_dark"
+                android:src="@drawable/ic_stop" />
+        </LinearLayout>
 
     </LinearLayout>
 

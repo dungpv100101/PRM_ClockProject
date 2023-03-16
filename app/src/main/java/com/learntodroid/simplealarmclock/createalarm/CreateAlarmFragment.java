@@ -140,18 +140,18 @@ public class CreateAlarmFragment extends Fragment {
             timePicker.setMinute(alarm.getMinute());
         }
 
-        if(alarm.isStarted()){
-            recurringOptions.setVisibility(View.VISIBLE);
-            recurring.setChecked(alarm.isStarted());
-            mon.setChecked(alarm.isMonday());
-            fri.setChecked(alarm.isFriday());
-            tue.setChecked(alarm.isTuesday());
-            wed.setChecked(alarm.isWednesday());
-            thu.setChecked(alarm.isThursday());
-            fri.setChecked(alarm.isFriday());
-            sat.setChecked(alarm.isSaturday());
-            sun.setChecked(alarm.isSunday());
-        }
+        title.setText(alarm.getTitle());
+        recurringOptions.setVisibility(alarm.isRecurring() ? View.VISIBLE : View.GONE);
+        recurring.setChecked(alarm.isRecurring());
+        mon.setChecked(alarm.isMonday());
+        fri.setChecked(alarm.isFriday());
+        tue.setChecked(alarm.isTuesday());
+        wed.setChecked(alarm.isWednesday());
+        thu.setChecked(alarm.isThursday());
+        fri.setChecked(alarm.isFriday());
+        sat.setChecked(alarm.isSaturday());
+        sun.setChecked(alarm.isSunday());
+
         if(alarm.getMailTo()!=null && !alarm.getMailTo().isEmpty()){
             mailOptions.setVisibility(View.VISIBLE);
             isSendMail.setChecked(alarm.getMailTo()!=null && !alarm.getMailTo().isEmpty());

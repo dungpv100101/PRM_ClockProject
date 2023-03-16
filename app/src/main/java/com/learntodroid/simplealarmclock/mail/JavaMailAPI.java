@@ -48,7 +48,7 @@ public class JavaMailAPI extends AsyncTask<Void, Void, Void> {
 
         MimeMessage mimeMessage = new MimeMessage(session);
         try {
-            mimeMessage.setFrom(new InternetAddress(EMAIL));
+            mimeMessage.setFrom(new InternetAddress("mosan_cms@zohomail.com"));
             mimeMessage.addRecipients(Message.RecipientType.TO, String.valueOf(new InternetAddress(email)));
             mimeMessage.setSubject(subject);
             mimeMessage.setText(message);

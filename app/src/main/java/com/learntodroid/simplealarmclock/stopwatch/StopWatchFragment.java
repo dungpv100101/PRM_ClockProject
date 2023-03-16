@@ -90,6 +90,7 @@ public class StopWatchFragment extends Fragment {
                     isResume=true;
                     btStop.setVisibility(View.GONE);
                     btStart.setImageDrawable(getResources().getDrawable(R.drawable.ic_pause));
+                    btStart.setBackground(getResources().getDrawable(R.drawable.bg_round_red));
                 }else {
                     tBuff+=tMilliSec;
                     handler.removeCallbacks(runnable);
@@ -97,6 +98,7 @@ public class StopWatchFragment extends Fragment {
                     isResume=false;
                     btStop.setVisibility(View.VISIBLE);
                     btStart.setImageDrawable(getResources().getDrawable(R.drawable.ic_play));
+                    btStart.setBackground(getResources().getDrawable(R.drawable.bg_round));
                 }
             }
         });

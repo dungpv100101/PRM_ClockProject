@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextClock;
 import android.widget.TextView;
 
 import com.learntodroid.simplealarmclock.R;
@@ -39,12 +40,13 @@ public class WorldTimeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    Calendar current;
+    private Calendar current;
 
-    Spinner spinner;
-    TextView timezone;
-    TextView txtCurrentTime;
-    TextView txtTimeZoneTime;
+    private Spinner spinner;
+    private TextView timezone;
+    private TextView txtCurrentTime;
+    private TextView txtTimeZoneTime;
+    private TextClock textClockWorld;
 
     long miliSeconds;
     ArrayAdapter<String> idAdapter;
@@ -90,9 +92,10 @@ public class WorldTimeFragment extends Fragment {
         timezone = (TextView) view.findViewById(R.id.timezone);
         txtCurrentTime = (TextView) view.findViewById(R.id.txtCurrentTime);
         txtTimeZoneTime = (TextView) view.findViewById(R.id.txtTimeZoneTime);
+        textClockWorld = (TextClock) view.findViewById(R.id.textClockWorld);
 
         String[] idArray = TimeZone.getAvailableIDs();
-        simpleDateFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm:ss");
+        simpleDateFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy");
         idAdapter = new ArrayAdapter<String>(getContext(), R.layout.support_simple_spinner_dropdown_item, idArray);
         spinner.setAdapter(idAdapter);
 
@@ -105,11 +108,14 @@ public class WorldTimeFragment extends Fragment {
                 String selectId = (String) (parent.getItemAtPosition(position));
 
                 TimeZone timeZone =  TimeZone.getTimeZone(selectId);
+
                 String timeZoneName = timeZone.getDisplayName();
+
+                textClockWorld.setTimeZone(selectId);
 
                 int timeZoneOffSet = timeZone.getRawOffset() / (60 * 100);
 
-                int hrs = timeZoneOffSet / 60;
+                int hrs = timeZoneOffSet / 600;
                 int mins = timeZoneOffSet % 60;
 
                 miliSeconds = miliSeconds + timeZone.getRawOffset();
