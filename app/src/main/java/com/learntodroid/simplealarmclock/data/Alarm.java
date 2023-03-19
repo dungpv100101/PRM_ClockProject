@@ -192,7 +192,7 @@ public class Alarm {
             }
             Toast.makeText(context, toastText, Toast.LENGTH_LONG).show();
 
-            alarmManager.setExact(
+            alarmManager.setExactAndAllowWhileIdle(
                     AlarmManager.RTC_WAKEUP,
                     calendar.getTimeInMillis(),
                     alarmPendingIntent
